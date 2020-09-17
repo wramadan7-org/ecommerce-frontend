@@ -2,17 +2,20 @@ import React from 'react'
 // import Navbar from '../component/NavigationBar'
 import {default as axios} from 'axios'
 import {
-	Container, Jumbotron, Table, Button,
-	Modal, ModalHeader, ModalBody, ModalFooter
+	Container, Jumbotron, Table, Button
+	// Modal, ModalHeader, ModalBody, ModalFooter, Input, Label,
 } from 'reactstrap'
 import Navbar from '../component/NavigationBar'
 import {Link} from 'react-router-dom'
+// import throttle from 'loadash.throttle'
 
 class Product extends React.Component {
 	constructor(props) {
 		super(props)
+		// throttle(this.deleteItem, 1000)
 		this.state = {
-			dataAPI: {}
+			dataAPI: {},
+			modalOpen: false,
 		}
 	}
 
@@ -22,28 +25,38 @@ class Product extends React.Component {
 	// 	return result
 	// }
 
-	componentDidMount() {
+	deleteItem = async(id) => {
+		let haps = await axios.delete(`http://localhost:8080/items/delete/${id}`)
+		console.log(haps)
+		// this.setState(this.state.dataAPI)
+		// this.props.history.push("/admin/product")
+	}
+
+	async componentDidMount() {
 		// const {dataAPI} = await axios.get('http://localhost:8080/items')
 		// this.setState({dataAPI})
 		// console.log(dataAPI)
-		axios.get('http://localhost:8080/items')
-		.then(res=>{
-			const dataAPI = res.data
-			console.log(dataAPI)
-			this.setState({dataAPI})
-		})
+		// axios.get('http://localhost:8080/items')
+		// .then(res=>{
+		// 	const dataAPI = res.data
+		// 	console.log(dataAPI)
+		// 	this.setState({dataAPI})
+		// })
+		const {data} = await axios.get('http://localhost:8080/items')
+		// console.log(data)
+		this.setState({dataAPI: data})
 	}
 
 	render() {
 		return(
-			<div>
+			<>
 				<Navbar />
 				<Jumbotron>
 					<Container>
 						<h1>Product Admin</h1>
 					</Container>
 					</Jumbotron>
-				<Container className="mt-2">
+				<Container className="mt-2" md={6}>
 					<div className="mb-3">
 						<Link to="/admin/create"><Button>Create Item</Button></Link>
 					</div>
@@ -68,15 +81,39 @@ class Product extends React.Component {
 								<td>{item.category}</td>
 								<td>{item.description}</td>
 								<td className="text-center">
-									<Button>Edit</Button> || <Button>Delete</Button>
+									{/* <Button size="md" onClick={() => this.editItem(item.id_item)}>Edit</Button> */}
+									<Link to={"/admin/edit/"+item.id_item}><Button>Edit</Button></Link>
+									 || 
+									 <Button size="md" onClick={() => this.deleteItem(item.id_item)}>Delete</Button>
 								</td>
 							</tr>
 						</tbody>
 						)
 					})}
 					</Table>
+					{/* <Modal isOpen={this.state.modalOpen}> */}
+					{/* 	<ModalHeader> */}
+					{/* 		<h3>Edit</h3> */}
+					{/* 	</ModalHeader> */}
+					{/* 	<ModalBody> */}
+					{/* 		<Form> */}
+					{/* 			<Label>Name</Label> */}
+					{/* 			<Input name="name" className="mb-3" onChange value={this.state.editingItem.name} /> */}
+					{/* 			<Label>Category</Label> */}
+					{/* 			<Input name="id_category" className="mb-3" value={this.state.editingItem.id_category} /> */}
+					{/* 			<Label>Price</Label> */}
+					{/* 			<Input name="price" className="mb-3" value={this.state.editingItem.price} /> */}
+					{/* 			<Label>Description</Label> */}
+					{/* 			<Input name="description" className="mb-3" value={this.state.editingItem.description} /> */}
+					{/* 		</Form> */}
+					{/* 	</ModalBody> */}
+					{/* 	<ModalFooter> */}
+					{/* 		<Button>SUBMIT</Button> */}
+					{/* 		<Button onClick={() => this.setState({modalOpen:false})}>CLOSE</Button> */}
+					{/* 	</ModalFooter> */}
+					{/* </Modal> */}
 				</Container>
-			</div>
+			</>
 			)
 	}
 
