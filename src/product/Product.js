@@ -15,7 +15,7 @@ class Product extends React.Component {
 		// throttle(this.deleteItem, 1000)
 		this.state = {
 			dataAPI: {},
-			modalOpen: false,
+			modalOpen: false
 		}
 	}
 
@@ -26,10 +26,11 @@ class Product extends React.Component {
 	// }
 
 	deleteItem = async(id) => {
-		let haps = await axios.delete(`http://localhost:8080/items/delete/${id}`)
-		console.log(haps)
+		await axios.delete(`http://localhost:8080/items/delete/${id}`)
+		await this.getData()
+		// console.log(haps)
 		// this.setState(this.state.dataAPI)
-		// this.props.history.push("/admin/product")
+		// this.props.history.push("/admin")
 	}
 
 	async componentDidMount() {
@@ -42,8 +43,13 @@ class Product extends React.Component {
 		// 	console.log(dataAPI)
 		// 	this.setState({dataAPI})
 		// })
-		const {data} = await axios.get('http://localhost:8080/items')
-		// console.log(data)
+		await this.getData()
+		
+	}
+
+	getData = async () => {
+		const {data} = await axios.get('http://localhost:8080/items/')
+		console.log(data)
 		this.setState({dataAPI: data})
 	}
 
@@ -58,7 +64,7 @@ class Product extends React.Component {
 					</Jumbotron>
 				<Container className="mt-2" md={6}>
 					<div className="mb-3">
-						<Link to="/admin/create"><Button>Create Item</Button></Link>
+						<Link to="/admin/product/create"><Button>Create Item</Button></Link>
 					</div>
 					<Table bordered>
 						<thead>
@@ -82,9 +88,9 @@ class Product extends React.Component {
 								<td>{item.description}</td>
 								<td className="text-center">
 									{/* <Button size="md" onClick={() => this.editItem(item.id_item)}>Edit</Button> */}
-									<Link to={"/admin/edit/"+item.id_item}><Button>Edit</Button></Link>
+									<Link to={"/admin/product/edit/"+item.id_item}><Button className="mx-2">Edit</Button></Link>
 									 || 
-									 <Button size="md" onClick={() => this.deleteItem(item.id_item)}>Delete</Button>
+									 <Button size="md" onClick={() => this.deleteItem(item.id_item)} className="mx-2">Delete</Button>
 								</td>
 							</tr>
 						</tbody>
