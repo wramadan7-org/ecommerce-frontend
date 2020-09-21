@@ -17,8 +17,7 @@ class Category extends React.Component {
 		this.state = {
 			dataAPI: {},
 			modalOpen: false,
-			id: '',
-			name: ''
+			editingData: {}
 		}
 	}
 
@@ -32,13 +31,19 @@ class Category extends React.Component {
 		await this.getData()
 	}
 
-	openModal = () => {
-		this.setState({modalOpen:true})
+	openModal = (id) => {
+		this.setState(`{modalOpen:true},`)
 	}
 
 	insertCategory = async(event) => {
 		let {data} = await axios.post(`http://localhost:8080/category`)
 		console.log(data)
+	}
+
+	editCategory = async(id) => {
+		const {data} = await axios.get(`http://localhost:8080/category/${id}`)
+		this.setState({modalOpen:true, editingData:data.data})
+		console.log(this.state)
 	}
 
 	deleteCategory = async(id) => {
@@ -79,7 +84,8 @@ class Category extends React.Component {
 										<td>{item.id_category}</td>
 										<td>{item.name_category}</td>
 										<td className="text-center">
-											<Button size="md" className="mx-2" onClick={() => this.openModal(item.id_category)}>Edit</Button>
+											{/* <Button size="md" className="mx-2" onClick={() => this.editCategory(item.id_category)}>Edit</Button> */}
+											<Link to={"/admin/category/edit/"+ item.id_category}><Button size="md" className="mx-2">Edit</Button></Link>
 											||
 											<Button size="md" className="mx-2" onClick={() => this.deleteCategory(item.id_category)}>Delete</Button>
 										</td>
@@ -89,25 +95,25 @@ class Category extends React.Component {
 						})}
 					</Table>
 				</Container>
-				<Modal isOpen={this.state.modalOpen}>
-					<ModalHeader>
-						<h2>Create Category</h2>
-					</ModalHeader>
-					<ModalBody>
-						<Form>
-							<Label>Id</Label>
-							<Input type="text" name="id" onChange={this.handlerChange} />
-						</Form>
-						<Form>
-							<Label>Name</Label>
-							<Input type="text" name="name" placeholder="Name" onChange={this.handlerChange} />
-						</Form>
-					</ModalBody>
-					<ModalFooter>
-						<Button type="submit" onSubmit={this.insertCategory}>Submit</Button>
-						<Button onClick={() => this.setState({modalOpen:false})}>Cancle</Button>
-					</ModalFooter>
-				</Modal>
+				{/* <Modal isOpen={this.state.modalOpen}> */}
+				{/* 	<ModalHeader> */}
+				{/* 		<h2>Create Category</h2> */}
+				{/* 	</ModalHeader> */}
+				{/* 	<ModalBody> */}
+				{/* 		<Form> */}
+				{/* 			<Label>Id</Label> */}
+				{/* 			<Input type="text" name="id" onChange={this.handlerChange} /> */}
+				{/* 		</Form> */}
+				{/* 		<Form> */}
+				{/* 			<Label>Name</Label> */}
+				{/* 			<Input type="text" name="name" value={this.state.editingData.result} onChange={this.handlerChange} /> */}
+				{/* 			<Button type="submit" onSubmit={this.insertCategory}>Submit</Button> */}
+				{/* 			<Button onClick={() => this.setState({modalOpen:false})}>Cancle</Button> */}
+				{/* 		</Form> */}
+				{/* 	</ModalBody> */}
+				{/* 	<ModalFooter> */}
+				{/* 	</ModalFooter> */}
+				{/* </Modal> */}
 			</>
 		)
 	}

@@ -11,7 +11,7 @@ class CreateCategory extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			name: ''
+			name_category: ''
 		}
 	}
 
@@ -22,6 +22,8 @@ class CreateCategory extends React.Component {
 	handlerSubmit = async(event) => {
 		event.preventDefault()
 		let {data} = await axios.post('http://localhost:8080/category', qs.stringify(this.state))
+		// console.log(data)
+		this.setState({name_category: data.name_category})
 		this.props.history.push("/admin/category")
 	}
 
@@ -38,7 +40,7 @@ class CreateCategory extends React.Component {
 					<Form onSubmit={this.handlerSubmit}>
 						<FormGroup>
 							<Label>Name</Label>
-							<Input type="text" name="name" placeholder="Name" onChange={this.handlerChange} />
+							<Input type="text" name="name_category" placeholder="Name" onChange={this.handlerChange} />
 						</FormGroup>
 						<FormGroup>
 							<Label></Label>
