@@ -1,4 +1,27 @@
-// import React from 'react'
+import React from 'react'
+
+class Lah extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            name: "Wahyu"
+        }
+
+    }
+
+    render() {
+        return (
+            <>
+                {/* { this.state.name} */}
+                {this.props.color}
+            </>
+        )
+    }
+}
+{/* <Lah color="Ramadan" /> */ }
+
+
+export default Lah
 
 // export default try
 // <React.Fragment>

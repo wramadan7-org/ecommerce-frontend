@@ -1,12 +1,12 @@
 import React from 'react'
-import {default as axios} from 'axios'
-import Navbar from '../component/NavigationBar'
+import { default as axios } from 'axios'
+import Navbar from '../../component/NavigationBar'
 import {
 	Container, Jumbotron, Form, FormGroup, Label, Input, Button
 } from 'reactstrap'
 import qs from 'querystring'
 
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 
 class CreateItem extends React.Component {
@@ -22,10 +22,10 @@ class CreateItem extends React.Component {
 	}
 
 	handlerChange = (e) => {
-		this.setState({ [e.target.name] : e.target.value })
+		this.setState({ [e.target.name]: e.target.value })
 	}
 
-	handlerSubmit = async(event) => {
+	handlerSubmit = async (event) => {
 		event.preventDefault()
 		// console.log(this.state)
 		await axios.post('http://localhost:8080/items', qs.stringify(this.state))
@@ -33,7 +33,7 @@ class CreateItem extends React.Component {
 	}
 
 	render() {
-		return(
+		return (
 			<React.Fragment>
 				<Navbar />
 				<Jumbotron>
@@ -55,14 +55,19 @@ class CreateItem extends React.Component {
 
 						<FormGroup>
 							<Label>Id Category</Label>
-							<Input type="number" name="id_category" placeholder="Category Item" onChange={this.handlerChange} />
+							{/* <Input type="number" name="id_category" placeholder="Category Item" onChange={this.handlerChange} /> */}
+							<Input type="select" name="id_category">
+								<option>1</option>
+								<option>1</option>
+								<option>1</option>
+							</Input>
 						</FormGroup>
 
 						<FormGroup>
 							<Label>Description</Label>
 							<Input type="textarea" name="description" placeholder="Description" onChange={this.handlerChange} />
 						</FormGroup>
-						
+
 						<FormGroup>
 							<Label></Label>
 							<Button type="submit">Submit</Button>

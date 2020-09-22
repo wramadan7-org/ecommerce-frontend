@@ -1,12 +1,12 @@
 import React from 'react'
 // import Navbar from '../component/NavigationBar'
-import {default as axios} from 'axios'
+import { default as axios } from 'axios'
 import {
-	Container, Jumbotron, Table, Button
+	Container, Jumbotron, Table, Button, Input
 	// Modal, ModalHeader, ModalBody, ModalFooter, Input, Label,
 } from 'reactstrap'
-import Navbar from '../component/NavigationBar'
-import {Link} from 'react-router-dom'
+import Navbar from '../../component/NavigationBar'
+import { Link } from 'react-router-dom'
 // import throttle from 'loadash.throttle'
 
 class Product extends React.Component {
@@ -25,7 +25,7 @@ class Product extends React.Component {
 	// 	return result
 	// }
 
-	deleteItem = async(id) => {
+	deleteItem = async (id) => {
 		await axios.delete(`http://localhost:8080/items/delete/${id}`)
 		await this.getData()
 		// console.log(haps)
@@ -44,29 +44,29 @@ class Product extends React.Component {
 		// 	this.setState({dataAPI})
 		// })
 		await this.getData()
-		
+
 	}
 
 	getData = async () => {
-		const {data} = await axios.get('http://localhost:8080/items/')
+		const { data } = await axios.get('http://localhost:8080/items/')
 		console.log(data)
-		this.setState({dataAPI: data})
+		this.setState({ dataAPI: data })
 	}
 
 	render() {
-		return(
+		return (
 			<>
 				<Navbar />
 				<Jumbotron>
 					<Container>
-						<h1>Product Admin</h1>
+						<h1>Manage Product</h1>
 					</Container>
-					</Jumbotron>
+				</Jumbotron>
 				<Container className="mt-2" md={6}>
-					<div className="mb-3">
-						<Link to="/admin/product/create"><Button>Create Item</Button></Link>
-					</div>
-					<Table bordered>
+					<Link to="/admin/product/create"><Button className="mb-3">Create Item</Button></Link>
+					<Input className="ml-auto w-25" name="search" type="text" placeholder="Serach" onChange={this.handlerChange} />
+
+					<Table bordered hover responsive className="mt-3">
 						<thead>
 							<tr>
 								<th>No</th>
@@ -77,25 +77,25 @@ class Product extends React.Component {
 								<th className="text-center">Actions</th>
 							</tr>
 						</thead>
-				{Object.keys(this.state.dataAPI).length && this.state.dataAPI.data.result.map(item=>{
-					return(
-						<tbody>
-							<tr>
-								<td>{item.id_item}</td>
-								<td>{item.name}</td>
-								<td>{item.price}</td>
-								<td>{item.category}</td>
-								<td>{item.description}</td>
-								<td className="text-center">
-									{/* <Button size="md" onClick={() => this.editItem(item.id_item)}>Edit</Button> */}
-									<Link to={"/admin/product/edit/"+item.id_item}><Button className="mx-2">Edit</Button></Link>
-									 || 
+						{Object.keys(this.state.dataAPI).length && this.state.dataAPI.data.result.map(item => {
+							return (
+								<tbody>
+									<tr>
+										<td scope="row">{item.id_item}</td>
+										<td>{item.name}</td>
+										<td>{item.price}</td>
+										<td>{item.category}</td>
+										<td>{item.description}</td>
+										<td className="text-center">
+											{/* <Button size="md" onClick={() => this.editItem(item.id_item)}>Edit</Button> */}
+											<Link to={"/admin/product/edit/" + item.id_item}><Button className="mx-2">Edit</Button></Link>
+									 ||
 									 <Button size="md" onClick={() => this.deleteItem(item.id_item)} className="mx-2">Delete</Button>
-								</td>
-							</tr>
-						</tbody>
-						)
-					})}
+										</td>
+									</tr>
+								</tbody>
+							)
+						})}
 					</Table>
 					{/* <Modal isOpen={this.state.modalOpen}> */}
 					{/* 	<ModalHeader> */}
@@ -120,7 +120,7 @@ class Product extends React.Component {
 					{/* </Modal> */}
 				</Container>
 			</>
-			)
+		)
 	}
 
 }

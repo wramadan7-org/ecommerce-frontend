@@ -1,10 +1,10 @@
 import React from 'react'
-import Navbar from '../component/NavigationBar'
+import Navbar from '../../component/NavigationBar'
 import {
 	Container, Jumbotron, Button, Form, FormGroup, Input, Label
 } from 'reactstrap'
 import qs from 'querystring'
-import {default as axios} from 'axios'
+import { default as axios } from 'axios'
 
 class CreateCategory extends React.Component {
 
@@ -16,19 +16,19 @@ class CreateCategory extends React.Component {
 	}
 
 	handlerChange = (e) => {
-		this.setState({ [e.target.name] : e.target.value })
+		this.setState({ [e.target.name]: e.target.value })
 	}
 
-	handlerSubmit = async(event) => {
+	handlerSubmit = async (event) => {
 		event.preventDefault()
-		let {data} = await axios.post('http://localhost:8080/category', qs.stringify(this.state))
+		let { data } = await axios.post('http://localhost:8080/category', qs.stringify(this.state))
 		// console.log(data)
-		this.setState({name_category: data.name_category})
+		this.setState({ name_category: data.name_category })
 		this.props.history.push("/admin/category")
 	}
 
-	render(){
-		return(
+	render() {
+		return (
 			<>
 				<Navbar />
 				<Jumbotron>
@@ -49,7 +49,7 @@ class CreateCategory extends React.Component {
 					</Form>
 				</Container>
 			</>
-			)
+		)
 	}
 }
 

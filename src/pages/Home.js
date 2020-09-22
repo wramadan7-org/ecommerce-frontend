@@ -1,5 +1,5 @@
 import React from 'react'
-import {default as axios} from 'axios'
+import { default as axios } from 'axios'
 import Navbar from '../component/NavigationBarUser'
 import jas from '../assets/images/jas.jpg'
 import star from '../assets/images/Star.png'
@@ -10,7 +10,7 @@ import {
 	Col, Row, Button
 } from 'reactstrap'
 import Syle from '../assets/style.css'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 
 
@@ -24,15 +24,15 @@ class Home extends React.Component {
 		}
 	}
 
-	getData = async() => {
-		let {data} = await axios.get('http://localhost:8080/items')
-		this.setState({dataAPI: data})
+	getData = async () => {
+		let { data } = await axios.get('http://localhost:8080/items')
+		this.setState({ dataAPI: data })
 		console.log(data)
 	}
 
-	getCategory = async() => {
-		let {data} = await axios.get('http://localhost:8080/category')
-		this.setState({dataCategory: data})
+	getCategory = async () => {
+		let { data } = await axios.get('http://localhost:8080/category')
+		this.setState({ dataCategory: data })
 		console.log(data)
 	}
 
@@ -68,37 +68,37 @@ class Home extends React.Component {
 	// }
 
 	render() {
-		return(
+		return (
 			<>
 				<Navbar />
-				<Container className="mt-5">
-					<h1>Carousel</h1>
+				<Container className="mt-5 vh-100 vw-100">
+					<h1 className="font-weight-bold">Carousel</h1>
 
-					<h1 className="mt-5">Category</h1>
+					<h1 className="mt-5 font-weight-bold">Category</h1>
 					<h6 className="text-muted">What are you currently looking for</h6>
 					<Row className="mt-4">
 						{Object.keys(this.state.dataCategory).length && this.state.dataCategory.data.result.map(item => {
-							return(
-								<Col md={3}>
-									<Link to={"/category/detail/"+item.id_category}>
-										<Button>{item.name_category}</Button>
+							return (
+								<Col md={3} sm={6}>
+									<Link to={"/category/detail/" + item.id_category}>
+										<Button className="m-2">{item.name_category}</Button>
 									</Link>
 								</Col>
-								)
-							})}
+							)
+						})}
 					</Row>
 
-					<h1 className="mt-5">New</h1>
+					<h1 className="mt-5 font-weight-bold">New</h1>
 					<h6 className="text-muted">You’ve never seen it before!</h6>
 					<Row>
 						{Object.keys(this.state.dataAPI).length && this.state.dataAPI.data.result.map(item => {
-							return(
+							return (
 								<Col md={3} sm={6}>
-									<Card className="shadow">
+									<Card className="shadow d-flex justify-content-between mt-3">
 										<CardImg src={jas} />
 										<CardBody>
-											<CardTitle className="title">{item.name}</CardTitle>
-											<CardText className="price">{item.price}</CardText>
+											<CardTitle className="title font-weight-bold">{item.name}</CardTitle>
+											<CardText className="price font-weight-bold">{item.price}</CardText>
 											<CardSubtitle className="subtitle">{item.category}</CardSubtitle>
 											<img src={star} />
 											<img src={star} />
@@ -108,11 +108,11 @@ class Home extends React.Component {
 										</CardBody>
 									</Card>
 								</Col>
-								
-								)
-							})}
+
+							)
+						})}
 					</Row>
-					
+
 				</Container>
 			</>
 		)

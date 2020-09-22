@@ -1,6 +1,6 @@
 import React from 'react'
 import Navbar from '../component/NavigationBarUser'
-import {default as axios} from 'axios'
+import { default as axios } from 'axios'
 import {
 	Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle,
 	Col, Row, Button, Container
@@ -12,39 +12,33 @@ class detailCategory extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			dataAPI: ''
-
+			dataAPI: {}
 		}
 	}
 
-	componentDidMount = async() => {
+	componentDidMount = async () => {
 		let id = this.props.match.params.id
 		// console.log(id)
-		let {data} = await axios.get(`http://localhost:8080/category/detail/${id}`)
-		this.setState({dataAPI: data.data})
+		let { data } = await axios.get(`http://localhost:8080/category/detail/${id}`)
+		this.setState({ dataAPI: data.data })
 		console.log(this.state)
 	}
 
-	getData = async() => {
-		
-	}
-
 	render() {
-		return(
+		return (
 			<>
 				<Navbar />
 				<Container className="mt-5">
-					<h1>Detail</h1>
-
+					<h1 className="font-weight-bold">Detail</h1>
 					<Row>
 						{Object.keys(this.state.dataAPI).length && this.state.dataAPI.result.map(item => {
-							return(
+							return (
 								<Col md={3} sm={6}>
 									<Card className="shadow">
 										<CardImg src={jas} />
 										<CardBody>
-											<CardTitle className="title">{item.name}</CardTitle>
-											<CardText className="price">Harga</CardText>
+											<CardTitle className="title font-weight-bold">{item.name}</CardTitle>
+											<CardText className="price font-weight-bold">Harga</CardText>
 											<CardSubtitle className="subtitle">{item.name_category}</CardSubtitle>
 											<img src={star} />
 											<img src={star} />
@@ -53,14 +47,14 @@ class detailCategory extends React.Component {
 											<img src={star} />
 										</CardBody>
 									</Card>
-									</Col>
-									)
-							})}
+								</Col>
+							)
+						})}
 					</Row>
 				</Container>
-				
-				</>
-				)
+
+			</>
+		)
 	}
 }
 

@@ -1,0 +1,12 @@
+{
+    "rules": {
+        "semi": [
+            "error",
+            "aways"
+        ],
+        "quotes": [
+            "error",
+            "double"
+        ]
+    }
+}

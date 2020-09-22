@@ -1,12 +1,12 @@
 import React from 'react'
-import {default as axios} from 'axios'
-import Navbar from '../component/NavigationBar'
+import { default as axios } from 'axios'
+import Navbar from '../../component/NavigationBar'
 import {
 	Container, Jumbotron, Form, FormGroup, Label, Input, Button
 } from 'reactstrap'
 import qs from 'querystring'
 
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 class EditItem extends React.Component {
 
@@ -20,18 +20,18 @@ class EditItem extends React.Component {
 		}
 	}
 
-	componentDidMount = async() => {
+	componentDidMount = async () => {
 		let id = this.props.match.params.id
-		let {data} = await axios.get(`http://localhost:8080/items/detail/${id}`)
+		let { data } = await axios.get(`http://localhost:8080/items/detail/${id}`)
 		this.setState(data.data)
 		// console.log(this.state)
 	}
 
 	handlerChange = (e) => {
-		this.setState({ [e.target.name] : e.target.value })
+		this.setState({ [e.target.name]: e.target.value })
 	}
 
-	handlerSubmit = async(event) => {
+	handlerSubmit = async (event) => {
 		event.preventDefault()
 		// console.log(this.state)
 		let id = this.props.match.params.id
@@ -40,7 +40,7 @@ class EditItem extends React.Component {
 	}
 
 	render() {
-		return(
+		return (
 			<React.Fragment>
 				<Navbar />
 				<Jumbotron>
@@ -69,7 +69,7 @@ class EditItem extends React.Component {
 							<Label>Description</Label>
 							<Input type="textarea" name="description" value={this.state.description} onChange={this.handlerChange} />
 						</FormGroup>
-						
+
 						<FormGroup>
 							<Label></Label>
 							<Button type="submit">Edit</Button>
@@ -77,7 +77,7 @@ class EditItem extends React.Component {
 						</FormGroup>
 					</Form>
 				</Container>
-				</React.Fragment>
+			</React.Fragment>
 		)
 	}
 }
